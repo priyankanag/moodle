@@ -253,8 +253,32 @@ function quiz_add_page_break_at($layout, $index) {
 function quiz_add_page_break_after($layout, $questionid) {
     $questionids = explode(',', $layout);
     $key = array_search($questionid, $questionids);
-    if ($key === false || !$questionid) {
-        return $layout;
+    if ($key === false || !$questionid)
+    {
+        $PAGE->set_heading($COURSE->fullname);
+        if ($cm !== null) 
+        {
+          if (stripos($returnurl, "/mod/{$cm->modname}/view.php")!== 0)
+            {
+            //Form to choose whether to add new question or not
+            echo "<html>";
+            echo "<form name='userchoice' action='questionPerPage' method='POST' />";
+            echo "<label> Page doesn't exist, still want to Add question </label>"/>;
+            echo "<input type='submit' name='choice' value='Yes' "/>;
+            echo "<input type='submit' name='choice' value='Yes' "/>;
+
+                function questionPerPage()
+                {
+                if ($_POST[choice]=='Yes')
+                    {
+                    array_pop($questions);
+                    }
+                }
+            }
+    
+      
+        }
+    return $layout;
     }
 
     array_splice($questionids, $key + 1, 0, '0');
